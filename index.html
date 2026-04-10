@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💖 Для Хэйден 💖</title>
+  <style>
+    /* Шрифт (пример, можно поменять на любой другой) */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&family=Pacifico&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #ffe4f0, #ffd6f0, #e8d5ff, #ffecd2);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating stickers */
+    .sticker {
+      position: fixed;
+      font-size: 2rem;
+      animation: floatSticker linear infinite;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    @keyframes floatSticker {
+      0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.7; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 30px 20px 60px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      color: #e75480;
+      text-shadow: 3px 3px 0px #ffb6d9, 6px 6px 0px rgba(231,84,128,0.2);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #c06090;
+      margin-top: 10px;
+    }
+
+    .bow {
+      font-size: 2.5rem;
+      animation: spin 3s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+      100% { transform: rotate(-10deg); }
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 2px solid rgba(255,182,217,0.5);
+      box-shadow: 0 8px 32px rgba(231,84,128,0.15);
+    }
+
+    .card h2 {
+      font-family: 'Pacifico', cursive;
+      color: #e75480;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Quiz */
+    .quiz-option {
+      display: block;
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      background: linear-gradient(135deg, #ffe4f0, #ffd6f0);
+      border: 2px solid #ffb6d9;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      color: #c06090;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+
+    .quiz-option:hover {
+      background: linear-gradient(135deg, #ffb6d9, #e8b4f8);
+      transform: scale(1.03);
+      box-shadow: 0 5px 15px rgba(231,84,128,0.3);
+    }
+
+    .quiz-option.selected {
+      background: linear-gradient(135deg, #e75480, #c06090);
+      color: white;
+      border-color: #e75480;
+    }
+
+    .quiz-result {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #e75480;
+      font-weight: 700;
+      margin-top: 15px;
+      min-height: 30px;
+    }
+
+    /* Running buttons */
+    .run-btn {
+      position: relative;
+      display: inline-block;
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #ff9ec4, #e75480);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(231,84,128,0.4);
+      transition: all 0.3s;
+      margin: 10px;
+    }
+
+    .run-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .btn-container {
+      text-align: center;
+      min-height: 120px;
+      position: relative;
+    }
+
+    /* Catch the flower game */
+    #gameCanvas {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(180deg, #ffe4f0, #ffd6f0);
+      border-radius: 20px;
+      border: 2px solid #ffb6d9;
+      display: block;
+      cursor: crosshair;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-score {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #e75480;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    .game-btn {
+      display: block;
+      margin: 15px auto 0;
+      padding: 10px 30px;
+      background: linear-gradient(135deg, #e75480, #c06090);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(231,84,128,0.4);
+      transition: transform 0.2s;
+    }
+
+    .game-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Love meter */
+    .meter-bar {
+      height: 25px;
+      background: #ffd6f0;
+      border-radius: 50px;
+      overflow: hidden;
+      margin: 15px 0;
+      border: 2px solid #ffb6d9;
+    }
+
+    .meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff9ec4, #e75480, #c06090);
+      border-radius: 50px;
+      transition: width 1s ease;
+      width: 0%;
+    }
+
+    .meter-label {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #e75480;
+      font-weight: 700;
+    }
+
+    /* Flower click game */
+    .flower-field {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      min-height: 80px;
+      padding: 10px;
+    }
+
+    .clickable-flower {
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform 0.1s;
+      animation: floatFlower 2s ease-in-out infinite;
+      user-select: none;
+    }
+
+    .clickable-flower:hover { transform: scale(1.3) rotate(15deg); }
+    .clickable-flower:active { transform: scale(0.8); }
+
+    @keyframes floatFlower {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Message box */
+    .message-box {
+      background: linear-gradient(135deg, #ffe4f0, #f8d7ff);
+      border: 2px dashed #ffb6d9;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #c06090;
+      line-height: 1.8;
+    }
+
+    .big-heart {
+      font-size: 4rem;
+      animation: heartbeat 1.5s ease-in-out infinite;
+      display: block;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Confetti burst */
+    .confetti-piece {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: confettiFall 2s ease forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(300px) rotate(720deg); opacity: 0; }
+    }
+
+    .section-decor {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      letter-spacing: 5px;
+    }
+
+    /* Music player */
+    .music-player {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 14px 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ffe4f0, #f3e6ff);
+      border: 2px solid rgba(255, 182, 217, 0.7);
+    }
+
+    .music-info {
+      max-width: 70%;
+    }
+
+    .music-title {
+      font-weight: 700;
+      color: #e75480;
+      margin-bottom: 4px;
+    }
+
+    .music-subtitle {
+      font-size: 0.9rem;
+      color: #c06090;
+    }
+
+    .music-btn {
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #ff9ec4, #e75480);
+      color: #fff;
+      font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      box-shadow: 0 5px 15px rgba(231,84,128,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .music-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 7px 20px rgba(231,84,128,0.55);
+    }
+
+    /* Sage section */
+    .sage-card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sage-image {
+      width: 180px;
+      height: 180px;
+      border-radius: 25px;
+      background: radial-gradient(circle at top, #ffffff, #e8d5ff);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sage-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      /* ТВОЯ КАРТИНКА СЭЙДЖ */
+      background-image: url('https://wallpapers.99px.ru/wallpapers/download/329835/');
+      background-size: cover;
+      background-position: center;
+      filter: drop-shadow(0 0 18px rgba(0,255,255,0.5));
+      transform: scale(1.02);
+    }
+
+    .sage-aura {
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(circle, rgba(0,255,255,0.4), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0.7;
+      animation: sagePulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes sagePulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    .sage-text {
+      flex: 1 1 240px;
+      color: #2a1230;
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .sage-text p { margin-bottom: 8px; }
+
+    .sage-quote {
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.03);
+      border: 1px dashed rgba(0, 226, 255, 0.6);
+      font-size: 0.9rem;
+      color: #184e4e;
+    }
+
+    .sage-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #00e2ff, #2dd4bf);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(0, 226, 255, 0.4);
+      margin-top: 6px;
+    }
+
+    .sage-badge span:first-child {
+      font-size: 1.1rem;
+    }
+
+    .sage-line {
+      font-weight: 700;
+      color: #e75480;
+    }
+
+    .sage-heart-orb {
+      position: absolute;
+      right: -6px;
+      bottom: -4px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #ff9ec4, #e75480);
+      box-shadow: 0 0 20px rgba(255, 158, 196, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.4rem;
+      animation: orbFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(3px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Catch the heart */
+    .heart-zone {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      border-radius: 20px;
+      border: 2px solid #ffb6d9;
+      background: linear-gradient(135deg, #ffe4f0, #ffd6f0);
+      overflow: hidden;
+    }
+
+    .heart-target {
+      position: absolute;
+      font-size: 2.3rem;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s;
+    }
+
+    .heart-target:active {
+      transform: scale(0.8);
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating background stickers -->
+  <div id="stickers"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="section-decor">🎀 🌸 🎀 🌸 🎀</div>
+      <h1>Привет, Хэйден!</h1>
+      <p class="subtitle">Этот сайт создан специально для тебя 💕</p>
+      <div style="margin-top:15px;">
+        <span class="bow">🎀</span>
+        <span style="font-size:2rem;">🌷🌸🌺🌼🌸🌷</span>
+        <span class="bow">🎀</span>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div class="card">
+      <h2>💌 Послание для тебя</h2>
+      <div class="message-box">
+        Ты особенная, удивительная и невероятно красивая! 🌸  
+
+        Этот маленький уголок интернета создан только для тебя. 🎀  
+
+        Надеюсь, он подарит тебе улыбку! 💖
+      </div>
+      <span class="big-heart">💖</span>
+    </div>
+
+    <!-- Quiz 1 -->
+    <div class="card">
+      <h2>🌸 Опрос: Какой ты цветок?</h2>
+      <div class="section-decor">🌷 🌼 🌸 🌺 🌻</div>
+      <p style="color:#c06090; margin-bottom:15px; text-align:center;">Выбери то, что тебе ближе всего 💕</p>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz1', '🌸 Ты — нежная Сакура! Ты мечтательная, романтичная и тонкая душа.')">🌸 Нежность и романтика</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz1', '🌻 Ты — яркий Подсолнух! Ты приносишь радость всем вокруг.')">🌻 Яркость и радость</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz1', '🌹 Ты — красная Роза! Страстная, сильная и невероятно красивая.')">🌹 Страсть и сила</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz1', '🌼 Ты — Ромашка! Добрая, светлая и всегда настоящая.')">🌼 Доброта и свет</button>
+      <div class="quiz-result" id="quiz1-result"></div>
+    </div>
+
+    <!-- Quiz 2 -->
+    <div class="card">
+      <h2>🎀 Опрос: Твоё настроение сегодня?</h2>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz2', '☀️ Солнышко! Ты сегодня просто светишься!')">☀️ Солнечное и радостное</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz2', '🌙 Загадочное... Ты как луна — таинственная и прекрасная.')">🌙 Немного мечтательное</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz2', '🌈 Разноцветное! Столько всего в голове — это значит ты творческая!')">🌈 Разноцветное и игривое</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz2', '🍵 Уютное. Ты сегодня как тёплый чай — мягкая и спокойная.')">🍵 Уютное и спокойное</button>
+      <div class="quiz-result" id="quiz2-result"></div>
+    </div>
+
+    <!-- Quiz 3 -->
+    <div class="card">
+      <h2>💖 Опрос: Какая ты принцесса?</h2>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz3', '🌸 Принцесса Сакуры — нежная, изящная, всегда в розовом!')">🌸 Люблю всё нежное и розовое</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz3', '⭐ Звёздная принцесса — яркая, смелая, покоряет сердца!')">⭐ Люблю блеск и звёзды</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz3', '🧚 Принцесса фей — волшебная, загадочная, живёт в своём мире!')">🧚 Люблю магию и сказки</button>
+      <button class="quiz-option" onclick="selectQuiz(this, 'quiz3', '🌊 Принцесса моря — свободная, глубокая и неповторимая!')">🌊 Люблю свободу и природу</button>
+      <div class="quiz-result" id="quiz3-result"></div>
+    </div>
+
+    <!-- Music card -->
+    <div class="card">
+      <h2>🎵 Небольшая мелодия для настроения</h2>
+      <p style="color:#c06090; text-align:center; margin-bottom:10px;">
+        Включи, если хочешь чуточку романтики 💖
+      </p>
+      <div class="music-player">
+        <div class="music-info">
+          <div class="music-title">Ghost - Mary On A Cross</div>
+          <div class="music-subtitle">твоя песня, только для тебя, Хэйден ✨</div>
+        </div>
+        <button class="music-btn" id="musicToggle" onclick="toggleMusic()">▶️ Включить</button>
+      </div>
+    </div>
+
+    <!-- Running buttons -->
+    <div class="card">
+      <h2>🎀 Поймай кнопку, если сможешь!</h2>
+      <p style="color:#c06090; text-align:center; margin-bottom:15px;">Некоторые кнопки убегают... 😄</p>
+      <div class="btn-container" id="btnContainer">
+        <button class="run-btn" id="runBtn1" onmouseover="runAway('runBtn1')" onclick="confettiBurst(event)">🌸 Поймай меня!</button>
+        <button class="run-btn" id="runBtn2" onmouseover="runAway('runBtn2')" onclick="confettiBurst(event)">🎀 И меня!</button>
+        <button class="run-btn" onclick="confettiBurst(event); showMessage()">💖 Нажми сюда!</button>
+      </div>
+      <div id="caughtMsg" style="text-align:center; color:#e75480; font-weight:700; font-size:1.1rem; min-height:30px; margin-top:10px;"></div>
+    </div>
+
+    <!-- Flower click game -->
+    <div class="card">
+      <h2>🌺 Собери цветочки!</h2>
+      <p style="color:#c06090; text-align:center; margin-bottom:15px;">Нажимай на цветочки, пока они не исчезнут! 🌸</p>
+      <div class="flower-field" id="flowerField"></div>
+      <div class="game-score">Собрано: <span id="flowerScore">0</span> цветочков 🌸</div>
+      <button class="game-btn" onclick="resetFlowers()">🌱 Посадить новые!</button>
+    </div>
+
+    <!-- Catch the heart game -->
+    <div class="card">
+      <h2>💘 Поймай сердечко!</h2>
+      <p style="color:#c06090; text-align:center; margin-bottom:10px;">
+        Сердечко убегает, но ты точно его поймаешь 💕
+      </p>
+      <div class="heart-zone" id="heartZone">
+        <div class="heart-target" id="heartTarget">💘</div>
+      </div>
+      <div class="game-score">Поймано сердечек: <span id="heartScore">0</span></div>
+      <button class="game-btn" onclick="resetHeartGame()">🔁 Сыграть ещё!</button>
+    </div>
+
+    <!-- Love meter -->
+    <div class="card">
+      <h2>💕 Измеритель милоты</h2>
+      <p style="color:#c06090; text-align:center; margin-bottom:10px;">Нажми, чтобы узнать! 🎀</p>
+      <div class="meter-bar"><div class="meter-fill" id="meterFill"></div></div>
+      <div class="meter-label" id="meterLabel">???</div>
+      <button class="game-btn" onclick="measureLove()">💖 Измерить!</button>
+    </div>
+
+    <!-- Sage special card -->
+    <div class="card">
+      <h2>🧊 Сэйдж следит за тобой 💖</h2>
+      <div class="section-decor">✨ 💙 🧊 💙 ✨</div>
+      <div class="sage-card">
+        <div class="sage-image">
+          <div class="sage-aura"></div>
+          <div class="sage-heart-orb">💖</div>
+        </div>
+        <div class="sage-text">
+          <p class="sage-line">Если бы в Валоранте была самая особенная девушка — это была бы ты, Хэйден.</p>
+          <p>Сэйдж бы точно взяла тебя в свою команду: ты лечишь настроение лучше любых способностей и бафов. 💫</p>
+          <p>Как бы ни шла катка, рядом с тобой — всегда комфортный буст к счастью и спокойствию. Ты — как ульт, который спасает в самый нужный момент.</p>
+          <div class="sage-quote">
+            «Защищать — мой долг. А тебя хочется защищать особенно бережно.» — Сэйдж, если бы говорила про тебя.</div>
+          <div class="sage-badge">
+            <span>🧊</span>
+            <span>"Мой любимый дуалист — это ты"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final message -->
+    <div class="card">
+      <h2>🌸 Ты невероятная, Хэйден!</h2>
+      <div class="message-box">
+        🎀 Помни, что ты заслуживаешь всего самого лучшего! 🎀  
+
+        🌸 Каждый день ты делаешь мир красивее просто своим присутствием. 🌸  
+
+        💖 Улыбайся — тебе очень идёт! 💖
+      </div>
+      <div class="section-decor" style="margin-top:20px;">🎀 🌸 💖 🌸 🎀</div>
+    </div>
+  </div>
+
+  <script>
+    // Floating stickers
+    const stickerEmojis = [
+      '🌸','🌷','🌺','🌼','🎀','💖','✨','🦋','🍓','🌈',
+      '💕','❤️','💝','🦄','🐰','🍬','🍌','🌻',
+      '🧁','🎵','🌙','⭐','🍒','💗','🌸'
+    ];
+    const stickersContainer = document.getElementById('stickers');
+
+    function createSticker() {
+      const s = document.createElement('div');
+      s.className = 'sticker';
+      s.textContent = stickerEmojis[Math.floor(Math.random() * stickerEmojis.length)];
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.animationDuration = (6 + Math.random() * 8) + 's';
+      s.style.animationDelay = (Math.random() * 3) + 's';
+      s.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+      stickersContainer.appendChild(s);
+      setTimeout(() => s.remove(), 15000);
+    }
+
+    setInterval(createSticker, 600);
+    for (let i = 0; i < 10; i++) setTimeout(createSticker, i * 200);
+
+    // Music
+    let music;
+    let isMusicPlaying = false;
+
+    function initMusic() {
+      if (!music) {
+        // ТВОЯ ССЫЛКА НА ПЕСНЮ
+        music = new Audio('https://www.youtube.com/watch?v=k5mX3NkA7jM');
+        music.loop = true;
+        music.volume = 0.5;
+      }
+    }
+
+    function toggleMusic() {
+      initMusic();
+      const btn = document.getElementById('musicToggle');
+      if (!isMusicPlaying) {
+        music.play();
+        isMusicPlaying = true;
+        btn.textContent = '⏸ Пауза';
+        confettiBurst({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
+      } else {
+        music.pause();
+        isMusicPlaying = false;
+        btn.textContent = '▶️ Включить';
+      }
+    }
+
+    // Quiz
+    function selectQuiz(btn, quizId, result) {
+      document.querySelectorAll(`[onclick*="${quizId}"]`).forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const el = document.getElementById(quizId + '-result');
+      el.textContent = result;
+      el.style.animation = 'none';
+      setTimeout(() => el.style.animation = '', 10);
+      confettiBurst({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
+    }
+
+    // Running buttons
+    function runAway(id) {
+      const btn = document.getElementById(id);
+      const container = document.getElementById('btnContainer');
+      const rect = container.getBoundingClientRect();
+      const maxX = rect.width - btn.offsetWidth - 20;
+      const maxY = 80;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      btn.style.position = 'absolute';
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
+      btn.style.transition = 'all 0.3s ease';
+    }
+
+    function showMessage() {
+      document.getElementById('caughtMsg').textContent = '🎉 Поймала! Ты такая ловкая, Хэйден! 💖';
+      confettiBurst({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
+    }
+
+    // Confetti
+    function confettiBurst(e) {
+      const colors = ['#e75480','#ffb6d9','#c06090','#f8d7ff','#ff9ec4','#ffd6f0','#e8b4f8'];
+      for (let i = 0; i < 20; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = (e.clientX + (Math.random()-0.5)*100) + 'px';
+        c.style.top = (e.clientY + window.scrollY - 20) + 'px';
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.width = (6 + Math.random()*8) + 'px';
+        c.style.height = c.style.width;
+        c.style.animationDuration = (1 + Math.random()) + 's';
+        const emojis = ['🌸','💖','🎀','✨','🌷'];
+        if (Math.random() > 0.5) {
+          c.style.background = 'transparent';
+          c.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+          c.style.fontSize = '1.2rem';
+        }
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 2000);
+      }
+    }
+
+    // Flower click game
+    let flowerScore = 0;
+    const flowers = ['🌸','🌷','🌺','🌼','🌻','🌹','💐','🌸','🌷','🌺'];
+
+    function createFlowers() {
+      const field = document.getElementById('flowerField');
+      field.innerHTML = '';
+      for (let i = 0; i < 15; i++) {
+        const f = document.createElement('span');
+        f.className = 'clickable-flower';
+        f.textContent = flowers[Math.floor(Math.random()*flowers.length)];
+        f.style.animationDelay = (Math.random()*2) + 's';
+        f.onclick = function(event) {
+          flowerScore++;
+          document.getElementById('flowerScore').textContent = flowerScore;
+          confettiBurst({ clientX: event.clientX, clientY: event.clientY });
+          f.style.transform = 'scale(0)';
+          f.style.transition = 'transform 0.3s';
+          setTimeout(() => f.remove(), 300);
+        };
+        field.appendChild(f);
+      }
+    }
+
+    function resetFlowers() {
+      createFlowers();
+    }
+
+    createFlowers();
+
+    // Catch the heart game
+    let heartScore = 0;
+
+    function randomHeartPosition() {
+      const zone = document.getElementById('heartZone');
+      const heart = document.getElementById('heartTarget');
+      if (!zone || !heart) return;
+
+      const rect = zone.getBoundingClientRect();
+      const maxX = rect.width - 40;
+      const maxY = rect.height - 40;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      heart.style.left = x + 'px';
+      heart.style.top = y + 'px';
+    }
+
+    function initHeartGame() {
+      const heart = document.getElementById('heartTarget');
+      if (!heart) return;
+
+      heart.onclick = function(event) {
+        heartScore++;
+        document.getElementById('heartScore').textContent = heartScore;
+        confettiBurst({ clientX: event.clientX, clientY: event.clientY });
+        randomHeartPosition();
+      };
+
+      setInterval(() => {
+        randomHeartPosition();
+      }, 1500);
+
+      randomHeartPosition();
+    }
+
+    function resetHeartGame() {
+      heartScore = 0;
+      const scoreEl = document.getElementById('heartScore');
+      if (scoreEl) scoreEl.textContent = heartScore;
+      randomHeartPosition();
+    }
+
+    window.addEventListener('load', () => {
+      initHeartGame();
+    });
+
+    // Love meter
+    function measureLove() {
+      const fill = document.getElementById('meterFill');
+      const label = document.getElementById('meterLabel');
+      const percent = 85 + Math.floor(Math.random() * 16);
+      fill.style.width = percent + '%';
+      const messages = [
+        '💖 Уровень милоты: МАКСИМАЛЬНЫЙ!',
+        '🌸 Ты невероятно милая!',
+        '🎀 Зашкаливающая красота!',
+        '✨ Ты просто чудо, Хэйден!',
+        '💕 Милота: за пределами шкалы!',
+        '🧊 Сэйдж: "Я бы хилла отдала только тебе"',
+        '💘 Сердце официально объявляет тебя MVP этого дня'
+      ];
+      label.textContent = messages[Math.floor(Math.random()*messages.length)];
+      confettiBurst({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
+    }
+  </script>
+</body>
+</html>
